@@ -6,11 +6,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import ContactDetail from "./ContactDetail";
 import api from "../api/contact";
+import EditContact from "./EditContact";
 
 function App() {
-  const [contacts, setcontacts] = useState(
-    []
-  );
+  const [contacts, setcontacts] = useState([]);
 
   //Retrieve contacts
   const retrieveContacts = async () => {
@@ -27,10 +26,20 @@ function App() {
     setcontacts([...contacts, response.data]);
   };
 
+  const updateContactHandler = async (contact) => {
+    const response = await api.put(`/contacts/${contact.id}`, contact);
+    const { id, name, email } = response;
+    setcontacts(
+      contacts.map((contact) => {
+        return contact.id === id ? { ...response.data } : contact;
+      })
+    );
+  };
+
   const removeContactHandler = async (id) => {
     const result = window.confirm("are you sure?");
     if (result) {
-    await api.delete(`/contacts/${id}`);
+      await api.delete(`/contacts/${id}`);
       const newContactList = contacts.filter((contact) => {
         return contact.id !== id;
       });
@@ -38,9 +47,7 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
-  }, [contacts]);
+
 
   useEffect(() => {
     const getAllContacts = async () => {
@@ -50,7 +57,7 @@ function App() {
       }
     };
     getAllContacts();
-  }, []);
+  }, [contacts]);
 
   return (
     <div className="ui container">
@@ -77,6 +84,16 @@ function App() {
           />
         </Switch>
         <Route exact path="/contact/:id" component={ContactDetail} />
+        <Route
+          exact
+          path="/edit-contact/:id"
+          render={(props) => (
+            <EditContact
+              {...props}
+              updateContactHandler={updateContactHandler}
+            />
+          )}
+        />
       </Router>
     </div>
   );
