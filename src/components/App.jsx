@@ -5,12 +5,20 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import ContactDetail from "./ContactDetail";
+import api from '../api/contact'
 
 function App() {
   const LOCAL_STORAGE_KEY = "contacts";
   const [contacts, setcontacts] = useState(
-    JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
+    // JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
+    []
   );
+
+//Retrieve contacts
+const retrieveContacts = async() =>{
+ const response = await api.get("/contacts")
+ return response.data;
+}
 
   const addContactHandler = (contact) => {
     setcontacts([...contacts, { id: contacts.length + 1, ...contact }]);
@@ -28,8 +36,18 @@ function App() {
   };
 
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
+    // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
   }, [contacts]);
+
+  useEffect(()=>{
+   const getAllContacts = async ()=>{
+    const allContacts = await retrieveContacts();
+      if (allContacts) {
+        setcontacts(allContacts)
+      }
+   }
+   getAllContacts();
+  },[])
 
   return (
     <div className="ui container">
