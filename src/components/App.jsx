@@ -40,18 +40,18 @@ function App() {
               <AddContact {...props} addContactHandler={addContactHandler} />
             )}
           />
-
-          <Route
-            path="/"
-            component={() => (
-              <RemoveContactContext.Provider value={removeContactHandler}>
+          <RemoveContactContext.Provider value={removeContactHandler}>
+            <Route
+              path="/"
+              render={(props) => (
                 <ContactList
+                  {...props}
                   contacts={contacts}
                   removeContactHandler={removeContactHandler}
                 />
-              </RemoveContactContext.Provider>
-            )}
-          />
+              )}
+            />
+          </RemoveContactContext.Provider>
         </Switch>
       </Router>
     </div>
