@@ -1,7 +1,8 @@
 import Header from "./Header";
 import ContactList from "./ContactList";
 import AddContact from "./AddContact";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import { RemoveContactContext } from "./RemoveContactContext";
 
@@ -23,29 +24,28 @@ function App() {
     setcontacts(newContactList);
   };
 
-  
-
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
   }, [contacts]);
 
-  
-
   return (
     <div className="ui container">
-      <Header />
-      <AddContact addContactHandler={addContactHandler} />
-      <RemoveContactContext.Provider value={removeContactHandler}>
-      <ContactList
-        contacts={contacts}
-        removeContactHandler={removeContactHandler}
-      />
-      </RemoveContactContext.Provider>
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/add" component={AddContact} />
+          <Route path="/" component={ContactList} />
+        </Switch>
+        {/* <AddContact addContactHandler={addContactHandler} /> */}
+        {/* <RemoveContactContext.Provider value={removeContactHandler}>
+          <ContactList
+            contacts={contacts}
+            removeContactHandler={removeContactHandler}
+          />
+        </RemoveContactContext.Provider> */}
+      </Router>
     </div>
   );
 }
-
-
-
 
 export default App;

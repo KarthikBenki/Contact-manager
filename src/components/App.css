@@ -21,4 +21,10 @@
     font-size: 20px;
     cursor: pointer;
   }
+
+  .right{
+  float: right;
+  padding: 10px;
+
+  }
   
