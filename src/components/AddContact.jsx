@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 class AddContact extends React.Component {
   state = {
@@ -47,6 +48,11 @@ class AddContact extends React.Component {
           <button className="ui button blue" onClick={this.add}>
             Add contact
           </button>
+          <Link to="/">
+          <button className="ui button green">
+            Contact List
+          </button>
+          </Link>
         </form>
       </div>
     );
