@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import { RemoveContactContext } from "./RemoveContactContext";
+import ContactDetail from "./ContactDetail";
 
 function App() {
   const LOCAL_STORAGE_KEY = "contacts";
@@ -33,15 +34,8 @@ function App() {
       <Router>
         <Header />
         <Switch>
-          <Route
-            exact
-            path="/add"
-            render={(props) => (
-              <AddContact {...props} addContactHandler={addContactHandler} />
-            )}
-          />
-          <RemoveContactContext.Provider value={removeContactHandler}>
-            <Route
+          
+            <Route exact
               path="/"
               render={(props) => (
                 <ContactList
@@ -51,8 +45,17 @@ function App() {
                 />
               )}
             />
-          </RemoveContactContext.Provider>
+            <Route
+            exact
+            path="/add"
+            render={(props) => (
+              <AddContact {...props} addContactHandler={addContactHandler} />
+            )}
+          />
         </Switch>
+          <Route exact path="/contact/:id" 
+        component={ContactDetail}
+          />
       </Router>
     </div>
   );

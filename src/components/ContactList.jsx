@@ -7,13 +7,7 @@ const ContactList = ({ contacts, removeContactHandler }) => {
     removeContactHandler(id);
   };
 
-  const contacts_1 = [
-    {
-      id: "1",
-      name: "Nick",
-      email: "nick@gmail.com",
-    },
-  ];
+
 
   const renderContactList = contacts.map((contact, index) => {
     return (
