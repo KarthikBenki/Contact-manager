@@ -33,16 +33,29 @@ function App() {
       <Router>
         <Header />
         <Switch>
-          <Route exact path="/add" component={AddContact} />
-          <Route path="/" component={ContactList} />
-        </Switch>
-        {/* <AddContact addContactHandler={addContactHandler} /> */}
-        {/* <RemoveContactContext.Provider value={removeContactHandler}>
-          <ContactList
-            contacts={contacts}
-            removeContactHandler={removeContactHandler}
+          <Route
+            exact
+            path="/add"
+            component={() => (
+              <AddContact addContactHandler={addContactHandler} />
+            )}
           />
-        </RemoveContactContext.Provider> */}
+         
+          <Route
+            path="/"
+            component={() => 
+              <RemoveContactContext.Provider value={removeContactHandler}>
+                <ContactList
+                  contacts={contacts}
+                  removeContactHandler={removeContactHandler}
+                />
+                </RemoveContactContext.Provider>
+             
+            }
+          />
+          
+          
+        </Switch>
       </Router>
     </div>
   );

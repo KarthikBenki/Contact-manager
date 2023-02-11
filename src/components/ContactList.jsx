@@ -15,7 +15,7 @@ const ContactList = ({ contacts, removeContactHandler }) => {
     },
   ];
 
-  const renderContactList = contacts_1.map((contact, index) => {
+  const renderContactList = contacts.map((contact, index) => {
     return (
       <ContactCard
         contact={contact}
