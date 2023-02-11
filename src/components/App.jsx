@@ -4,7 +4,6 @@ import AddContact from "./AddContact";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import { RemoveContactContext } from "./RemoveContactContext";
 import ContactDetail from "./ContactDetail";
 
 function App() {
@@ -18,11 +17,14 @@ function App() {
   };
 
   const removeContactHandler = (id) => {
-    const newContactList = contacts.filter((contact) => {
-      return contact.id !== id;
-    });
+    const result = window.confirm("are you sure?");
+    if (result) {
+      const newContactList = contacts.filter((contact) => {
+        return contact.id !== id;
+      });
 
-    setcontacts(newContactList);
+      setcontacts(newContactList);
+    }
   };
 
   useEffect(() => {
@@ -34,18 +36,18 @@ function App() {
       <Router>
         <Header />
         <Switch>
-          
-            <Route exact
-              path="/"
-              render={(props) => (
-                <ContactList
-                  {...props}
-                  contacts={contacts}
-                  removeContactHandler={removeContactHandler}
-                />
-              )}
-            />
-            <Route
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <ContactList
+                {...props}
+                contacts={contacts}
+                removeContactHandler={removeContactHandler}
+              />
+            )}
+          />
+          <Route
             exact
             path="/add"
             render={(props) => (
@@ -53,9 +55,7 @@ function App() {
             )}
           />
         </Switch>
-          <Route exact path="/contact/:id" 
-        component={ContactDetail}
-          />
+        <Route exact path="/contact/:id" component={ContactDetail} />
       </Router>
     </div>
   );
