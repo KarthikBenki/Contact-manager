@@ -8,9 +8,7 @@ import ContactDetail from "./ContactDetail";
 import api from "../api/contact";
 
 function App() {
-  const LOCAL_STORAGE_KEY = "contacts";
   const [contacts, setcontacts] = useState(
-    // JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
     []
   );
 
@@ -27,16 +25,15 @@ function App() {
     };
     const response = await api.post("/contacts", request);
     setcontacts([...contacts, response.data]);
-    // setcontacts([...contacts, { id: contacts.length + 1, ...contact }]);
   };
 
-  const removeContactHandler = (id) => {
+  const removeContactHandler = async (id) => {
     const result = window.confirm("are you sure?");
     if (result) {
+    await api.delete(`/contacts/${id}`);
       const newContactList = contacts.filter((contact) => {
         return contact.id !== id;
       });
-
       setcontacts(newContactList);
     }
   };
