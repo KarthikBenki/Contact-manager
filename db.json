@@ -1,0 +1,29 @@
+{
+  "contacts": [
+    {
+      "id": 1,
+      "name": "Karthik",
+      "email": "karthik@gmail.com"
+    },
+    {
+      "id": 2,
+      "name": "vikas",
+      "email": "vikas@gmail.com"
+    },
+    {
+      "id": 3,
+      "name": "abhi",
+      "email": "abhi@gmail.com"
+    },
+    {
+      "id": 4,
+      "name": "kamala",
+      "email": "kamala@gmail.com"
+    },
+    {
+      "id": 5,
+      "name": "karthik ",
+      "email": "karthik.mc@birlasoft.com"
+    }
+  ]
+}

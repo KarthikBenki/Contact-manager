@@ -34,6 +34,7 @@ function App() {
         return contact.id === id ? { ...response.data } : contact;
       })
     );
+
   };
 
   const removeContactHandler = async (id) => {
@@ -57,7 +58,7 @@ function App() {
       }
     };
     getAllContacts();
-  }, [contacts]);
+  }, []);
 
   return (
     <div className="ui container">
