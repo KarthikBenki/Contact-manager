@@ -7,9 +7,12 @@ import "./App.css";
 import ContactDetail from "./ContactDetail";
 import api from "../api/contact";
 import EditContact from "./EditContact";
+import contact from "../api/contact";
 
 function App() {
   const [contacts, setcontacts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   //Retrieve contacts
   const retrieveContacts = async () => {
@@ -34,7 +37,6 @@ function App() {
         return contact.id === id ? { ...response.data } : contact;
       })
     );
-
   };
 
   const removeContactHandler = async (id) => {
@@ -48,7 +50,20 @@ function App() {
     }
   };
 
-
+  const searchHandler = (searchTerm) => {
+    setSearchTerm(searchTerm);
+    if (searchTerm != "") {
+      const newContactList = contacts.filter((contact) => {
+        return Object.values(contact)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      });
+      setSearchResults(newContactList);
+    }else{
+      setSearchResults(contacts);
+    }
+  };
 
   useEffect(() => {
     const getAllContacts = async () => {
@@ -71,8 +86,10 @@ function App() {
             render={(props) => (
               <ContactList
                 {...props}
-                contacts={contacts}
+                contacts={searchTerm.length<1 ?contacts:searchResults}
                 removeContactHandler={removeContactHandler}
+                term={searchTerm}
+                searchKeyword={searchHandler}
               />
             )}
           />
