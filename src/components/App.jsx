@@ -32,11 +32,10 @@ function App() {
   const updateContactHandler = async (contact) => {
     const response = await api.put(`/contacts/${contact.id}`, contact);
     const { id, name, email } = response;
-    setcontacts(
-      contacts.map((contact) => {
-        return contact.id === id ? { ...response.data } : contact;
-      })
-    );
+    const updatedContactList = contacts.map((contact) => {
+      return contact.id === id ? { ...response.data } : contact;
+    });
+    setcontacts(updatedContactList);
   };
 
   const removeContactHandler = async (id) => {
@@ -60,7 +59,7 @@ function App() {
           .includes(searchTerm.toLowerCase());
       });
       setSearchResults(newContactList);
-    }else{
+    } else {
       setSearchResults(contacts);
     }
   };
@@ -73,7 +72,7 @@ function App() {
       }
     };
     getAllContacts();
-  }, []);
+  }, [contacts]);
 
   return (
     <div className="ui container">
@@ -86,7 +85,7 @@ function App() {
             render={(props) => (
               <ContactList
                 {...props}
-                contacts={searchTerm.length<1 ?contacts:searchResults}
+                contacts={searchTerm.length < 1 ? contacts : searchResults}
                 removeContactHandler={removeContactHandler}
                 term={searchTerm}
                 searchKeyword={searchHandler}
